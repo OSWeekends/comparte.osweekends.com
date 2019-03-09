@@ -40,13 +40,11 @@ const app = (function(){
     firebase.auth().onAuthStateChanged( user => {
       if (user) {
         console.log('user', user);
-        main.textContent = 'estás logueado';
-        const button =
-        `
-          <button>log out</button>
-        `;
-        main.insertAdjacentHTML('beforeend', button);
-        document.querySelector('button').addEventListener('click', logOut, false);
+        document.querySelector('#header-user--username').textContent = user.displayName;
+        const img = document.createElement('IMG');
+        img.setAttribute('src', user.photoURL);
+        document.querySelector('.header-avatar').appendChild(img);
+        document.querySelector('.header-user--logout button').addEventListener('click', logOut, false);
       } else {
         const template =
         `
@@ -57,7 +55,7 @@ const app = (function(){
         `;
 
         main.insertAdjacentHTML('afterbegin', template);
-        document.querySelector('button').addEventListener('click', loginByTwitter, false);
+        document.querySelector('.login-container button').addEventListener('click', loginByTwitter, false);
       }
     })
   }

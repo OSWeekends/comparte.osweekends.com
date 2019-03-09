@@ -8,8 +8,22 @@
   <title>Comparte-OSWeekends</title>
 </head>
 <body>
-
+  <header>
+    <img class="header-logo" src="/img/osw-logo.svg" alt="logo">
+    <div id="welcome">
+      <div class="header-user">
+        <p>Bienvenido <span id="header-user--username"></span></p>
+        <div class="header-user--logout">
+          <button>log out</button>
+        </div>
+      </div>
+      <div class="header-avatar"></div>
+    </div>
+  </header>
   <main></main>
+  <footer>
+    <p>copyright 2019</p>
+  </footer>
 
   <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
   <script src="js/config.js"></script>
@@ -17,5 +31,6 @@
 
   <script src="//unpkg.com/navigo@6"></script>
   <script src="js/main.js"></script>
+
 </body>
 </html>

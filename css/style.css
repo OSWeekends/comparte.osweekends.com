@@ -1,0 +1,32 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+header {
+
+}
+
+header img {
+  width: 120px;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  background-color: #444444;
+  width: 100%;
+  color: white;
+}
