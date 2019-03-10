@@ -15,6 +15,39 @@ main {
   height: 100%;
 }
 
+main .main-container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  align-items: center;
+}
+
+main .main-container--div {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+main .main-textarea {
+  margin: 60px 0 20px 0;
+}
+
+main textarea#tweet {
+  background: #fff;
+  border: 2px solid #e6ecf0;
+  border-radius: 8px;
+  line-height: 20px;
+  width: 300px;
+  min-height: 80px;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+
 header {
   border-bottom: 1px solid #999;
   display: flex;
@@ -28,7 +61,7 @@ header .header-logo {
 
 header #header-welcome {
   display: flex;
-  flex: 0 1 40%;
+  flex: 0 1 350px;
   justify-content: space-around;
 }
 
@@ -47,4 +80,25 @@ footer {
   background-color: #444444;
   width: 100%;
   color: white;
+}
+
+
+
+/* media queries */
+@media (min-width: 768px) {
+  .main-container {
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .main-container {
+      width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .main-container {
+        width: 1170px;
+  }
 }
