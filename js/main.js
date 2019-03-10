@@ -76,8 +76,10 @@ const app = (function(){
           const template =
           `
           <div class="main-container">
-            <button>login con twitter</button>
-            <p><input type="checkbox" /> ¿Eres admin?</p>
+            <div class="main-container--div">
+              <button>login con twitter</button>
+              <p><input type="checkbox" /> ¿Eres admin?</p>
+            </div>
           </div>
           `;
 
@@ -97,6 +99,7 @@ const app = (function(){
   }
 
   function logOut () {
+    main.innerHTML = '';
     firebase.auth().signOut();
   }
 
