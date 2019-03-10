@@ -16,11 +16,29 @@ main {
 }
 
 header {
-
+  border-bottom: 1px solid #999;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 20px;
 }
 
-header img {
-  width: 120px;
+header .header-logo {
+  height: 90px;
+}
+
+header #header-welcome {
+  display: flex;
+  flex: 0 1 40%;
+  justify-content: space-around;
+}
+
+header .header-avatar {
+  align-self: center;
+}
+
+header .header-avatar img{
+  border-radius: 50%;
+  border: 1px solid #ccc;
 }
 
 footer {

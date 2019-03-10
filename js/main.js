@@ -40,12 +40,16 @@ const app = (function(){
     firebase.auth().onAuthStateChanged( user => {
       if (user) {
         console.log('user', user);
+        /**
+         * !FIXME - extraer fuera
+         */
         document.querySelector('#header-user--username').textContent = user.displayName;
         const img = document.createElement('IMG');
         img.setAttribute('src', user.photoURL);
         document.querySelector('.header-avatar').appendChild(img);
         document.querySelector('.header-user--logout button').addEventListener('click', logOut, false);
       } else {
+        document.querySelector('#header-welcome').style.display = 'none';
         const template =
         `
         <div class="login-container">
