@@ -60,7 +60,7 @@ const app = (function(){
             <div class="main-container">
               <div class="main-container--div">
                 <div class="main-textarea">
-                <textarea id="tweet" name="story" placeholder="tu tweet..."></textarea>
+                  <div id="tweet" name="tweet" placeholder="tu tweet..." contentEditable="true"></div>
                 </div>
 
                 <button id="send-tweet">Enviar tweet</button>
@@ -69,6 +69,8 @@ const app = (function(){
           `;
 
           main.insertAdjacentHTML('afterbegin', template);
+          document.querySelector('#tweet')
+            .addEventListener('keyup', limitChars, false);
 
         } else {
 
@@ -101,6 +103,35 @@ const app = (function(){
   function logOut () {
     main.innerHTML = '';
     firebase.auth().signOut();
+  }
+
+  /**
+   * https://codepen.io/gtb104/pen/pztgH
+   * @param {*} event
+   */
+  function limitChars (event) {
+    console.log(event.target.innerText.length);
+    const text = event.target.innerText;
+
+    if (event.keyCode !== 37 && event.keyCode !== 38 && event.keyCode !== 39 && event.keyCode !== 40) {
+      if (text.length > 279) {
+        const textarea = document.querySelector('#tweet');
+        let textExtra = text.slice(0, 279);
+        let newString = `${textExtra}<span class="tweet-error">${text.slice(279)}</span>`;
+        event.target.innerHTML = newString;
+
+        range = document.createRange();
+        range.selectNodeContents(textarea);
+        range.collapse(false);
+        selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        document.querySelector('#send-tweet').disabled = true;
+      } else {
+        document.querySelector('#send-tweet').disabled = false;
+      }
+    }
   }
 
 })();

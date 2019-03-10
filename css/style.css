@@ -37,7 +37,7 @@ main .main-textarea {
   margin-bottom: 20px;
 }
 
-main textarea#tweet {
+main div#tweet {
   background: #fff;
   border: 2px solid #e6ecf0;
   border-radius: 8px;
@@ -46,6 +46,10 @@ main textarea#tweet {
   min-height: 80px;
   vertical-align: top;
   padding: 5px 10px;
+}
+
+span.tweet-error {
+  color: red;
 }
 
 header {
