@@ -7,8 +7,19 @@ const app = (function(){
 
   const main =  document.querySelector('main');
 
+  const rootDB = firebase.database().ref();
+  const users = rootDB.child('users');
+
+  const user = {
+    name: '',
+    creationTime: '',
+    isAdmin: false,
+    token: ''
+  }
+
   router
     .on('/', init)
+    .on('/myprofile', getProfileUser)
     .resolve();
 
   function init() {
@@ -16,18 +27,13 @@ const app = (function(){
       .getRedirectResult()
         .then( result => {
           if (result.credential) {
-
-            console.log('result', result.credential);
-            // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
-            // You can use these server side with your app's credentials to access the Twitter API.
-            const token = result.credential.accessToken;
-            const secret = result.credential.secret;
-            // ...
-
+            user.token = result.credential.accessToken;
           }
-          // The signed-in user info.
-          const user = result.user;
-
+          if (result.user) {
+            user.name = result.user.displayName;
+            user.creationTime = result.user.metadata.a;
+            users.child(user.token).set(user);
+          }
         }).catch( error => {
           console.log('error', error);
           // Handle Errors here.
@@ -44,33 +50,8 @@ const app = (function(){
       .onAuthStateChanged( user => {
         if (user) {
 
-          console.log('user', user);
-          /**
-           * !FIXME - extraer fuera
-           */
-          document.querySelector('#header-user--username').textContent = user.displayName;
-          const img = document.createElement('IMG');
-          img.setAttribute('src', user.photoURL);
-          document.querySelector('.header-avatar').appendChild(img);
-          document.querySelector('.header-user--logout button')
-            .addEventListener('click', logOut, false);
-
-          const template =
-          `
-            <div class="main-container">
-              <div class="main-container--div">
-                <div class="main-textarea">
-                  <div id="tweet" name="tweet" placeholder="tu tweet..." contentEditable="true"></div>
-                </div>
-
-                <button id="send-tweet">Enviar tweet</button>
-              </div>
-            </div>
-          `;
-
-          main.insertAdjacentHTML('afterbegin', template);
-          document.querySelector('#tweet')
-            .addEventListener('keyup', limitChars, false);
+          router.navigate('/myprofile');
+          getProfileUser (user);
 
         } else {
 
@@ -103,6 +84,40 @@ const app = (function(){
   function logOut () {
     main.innerHTML = '';
     firebase.auth().signOut();
+    router.navigate('/');
+  }
+
+  function getProfileUser (user) {
+    console.log('user', user);
+
+    if (user) {
+      /**
+       * !FIXME - extraer fuera
+       */
+      document.querySelector('#header-user--username').textContent = user.displayName;
+      const img = document.createElement('IMG');
+      img.setAttribute('src', user.photoURL);
+      document.querySelector('.header-avatar').appendChild(img);
+      document.querySelector('.header-user--logout button')
+        .addEventListener('click', logOut, false);
+
+      const template =
+      `
+        <div class="main-container">
+          <div class="main-container--div">
+            <div class="main-textarea">
+              <div id="tweet" name="tweet" placeholder="tu tweet..." contentEditable="true"></div>
+            </div>
+
+            <button id="send-tweet">Enviar tweet</button>
+          </div>
+        </div>
+      `;
+
+      main.insertAdjacentHTML('afterbegin', template);
+      document.querySelector('#tweet')
+        .addEventListener('keyup', limitChars, false);
+    }
   }
 
   /**
@@ -110,7 +125,7 @@ const app = (function(){
    * @param {*} event
    */
   function limitChars (event) {
-    console.log(event.target.innerText.length);
+    // console.log(event.target.innerText.length);
     const text = event.target.innerText;
 
     if (event.keyCode !== 37 && event.keyCode !== 38 && event.keyCode !== 39 && event.keyCode !== 40) {
