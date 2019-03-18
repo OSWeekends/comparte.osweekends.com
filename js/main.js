@@ -14,10 +14,11 @@ const app = (function(){
   // const tweets = firebase.database().ref(`users/${token}/tweets`);
 
   const user = {
-    name: '',
+    uid: '',
+    displayName: '',
     creationTime: '',
     isAdmin: false,
-    id: ''
+    photoURL: ''
   };
 
   router
@@ -27,37 +28,12 @@ const app = (function(){
 
   function init() {
     firebase.auth()
-      .getRedirectResult()
-        .then( result => {
-          console.log('result.credential', result.credential);
-          console.log('result.user', result.user);
+      .onAuthStateChanged( response => {
+        if (response) {
 
-          if (result.credential) {
-            token = result.credential.accessToken;
-          }
-          if (result.user) {
-            console.log('user.screenName', user.screenName);
-            user.id = result.user.uid;
-            user.name = result.user.displayName;
-            user.creationTime = result.user.metadata.a;
-            users.child(token).set(user);
-          }
-        }).catch( error => {
-          console.log('error', error);
-          // Handle Errors here.
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // The email of the user's account used.
-          const email = error.email;
-          // The firebase.auth.AuthCredential type that was used.
-          const credential = error.credential;
-          // ...
-        });
+          console.log(response);
+          saveUser(response);
 
-    firebase.auth()
-      .onAuthStateChanged( user => {
-        if (user) {
-          console.log('user', user);
           /**
            * !FIXME - extraer fuera
            */
@@ -109,11 +85,25 @@ const app = (function(){
       });
   }
 
+  function saveUser(response) {
+    user.uid = response.uid;
+    user.displayName = response.displayName;
+    user.creationTime = response.metadata.a;
+    user.photoURL = response.photoURL;
+    users.child(user.uid).set(user);
+  }
+
   function loginByTwitter () {
     const provider = new firebase.auth.TwitterAuthProvider();
 
     firebase.auth()
-      .signInWithRedirect(provider);
+      .signInWithRedirect(provider)
+        .then( user => {
+          console.log('signInWithRedirect', user);
+        })
+        .catch(err => {
+          console.log('signInWithRedirect', err);
+        })
   }
 
   function logOut () {
@@ -155,7 +145,7 @@ const app = (function(){
     const textArea = document.querySelector('#tweet').textContent;
 
     uid = firebase.auth().currentUser.uid;
-    const user = users.child(token);
+    const user = users.child(uid);
     const tweets = user.child('tweets');
     const tweet = tweets.push();
 
@@ -166,6 +156,12 @@ const app = (function(){
       rejected: true,
     });
 
+    textArea.textContent = '';
+
+  }
+
+  function myTweetsList() {
+
   }
 
   function getTweets () {
@@ -173,29 +169,38 @@ const app = (function(){
     let userToRender = [];
 
     users.on('value', (snapshot) => {
+      // console.log(snapshot.val());
 
-      snapshot.forEach((users => {
-        let listUser = {};
+      snapshot.forEach(user => {
+        // console.log(user.val());
 
-        listUser.name = users.val().name;
-
-        users.forEach(tweets => {
-          listUser.tweet = [];
-          if (tweets.key === 'tweets') {
-            tweets.forEach(tweet => {
-              listUser.tweet.push(
-                {
-                  id: tweet.key,
-                  message: tweet.val().message,
-                  published: tweet.val().published
-                }
-              );
-            });
-            userToRender.push(listUser);
-            // console.log(userToRender);
-          }
+        user.forEach(tweets => {
+          console.log(tweets.val());
+          // if (tweets.val() === 'tweets') {
+          //   console.log(tweets.val());
+          // }
         });
-      }));
+
+        // let listUser = {};
+        // listUser.name = user.val().displayName;
+        // listUser.tweet = [];
+
+        // if (user.val().tweets && user.val().tweets === 'tweets') {
+
+        //   tweets.forEach(tweet => {
+        //     listUser.tweet.push(
+        //       {
+        //         id: tweet.key,
+        //         message: tweet.val().message,
+        //         published: tweet.val().published
+        //       }
+        //     );
+        //   });
+        //   userToRender.push(listUser);
+        //   // console.log(userToRender);
+        // }
+      });
+
       renderListTweets(userToRender);
     });
 

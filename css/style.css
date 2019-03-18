@@ -22,7 +22,7 @@ main .main-container {
   margin-left: auto;
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  /* flex: 1 1 auto; */
   align-items: center;
 }
 
