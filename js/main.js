@@ -11,13 +11,13 @@ const app = (function(){
   const rootDB = firebase.database().ref();
   const users = rootDB.child('users');
 
-  // const tweets = firebase.database().ref(`users/${token}/tweets`);
-
   const user = {
-    name: '',
+    uid: '',
+    username: '',
+    displayName: '',
     creationTime: '',
+    photoURL: '',
     isAdmin: false,
-    id: ''
   };
 
   router
@@ -29,18 +29,12 @@ const app = (function(){
     firebase.auth()
       .getRedirectResult()
         .then( result => {
-          console.log('result.credential', result.credential);
-          console.log('result.user', result.user);
-
-          if (result.credential) {
-            token = result.credential.accessToken;
-          }
-          if (result.user) {
-            console.log('user.screenName', user.screenName);
-            user.id = result.user.uid;
-            user.name = result.user.displayName;
-            user.creationTime = result.user.metadata.a;
-            users.child(token).set(user);
+          console.log(result);
+          console.log(result.additionalUserInfo.isNewUser);
+          if(!result.additionalUserInfo.isNewUser) {
+            saveUser(result);
+          } else {
+            console.log('usuario conocido');
           }
         }).catch( error => {
           console.log('error', error);
@@ -57,7 +51,7 @@ const app = (function(){
     firebase.auth()
       .onAuthStateChanged( user => {
         if (user) {
-          console.log('user', user);
+          console.log('onAuthStateChanged', user);
           /**
            * !FIXME - extraer fuera
            */
@@ -120,6 +114,15 @@ const app = (function(){
     main.innerHTML = '';
     firebase.auth().signOut();
     router.navigate('/');
+  }
+
+  function saveUser(response) {
+    user.uid = response.user.uid;
+    user.username = response.additionalUserInfo.username;
+    user.displayName = response.user.displayName;
+    user.creationTime = response.user.metadata.a;
+    user.photoURL = response.user.photoURL;
+    users.child(user.uid).set(user);
   }
 
   /**
