@@ -11,14 +11,13 @@ const app = (function(){
   const rootDB = firebase.database().ref();
   const users = rootDB.child('users');
 
-  // const tweets = firebase.database().ref(`users/${token}/tweets`);
-
   const user = {
     uid: '',
+    username: '',
     displayName: '',
     creationTime: '',
+    photoURL: '',
     isAdmin: false,
-    photoURL: ''
   };
 
   router
@@ -28,12 +27,46 @@ const app = (function(){
 
   function init() {
     firebase.auth()
-      .onAuthStateChanged( response => {
-        if (response) {
+      .getRedirectResult()
+        .then( result => {
 
-          console.log(response);
-          saveUser(response);
+          if (result.user !== null) {
+            users.on('value', snapshot => {
+              snapshot.forEach( user => {
+                console.log(snapshot instanceof Object);
+                console.log(user.key);
+                if (user.key.indexOf(firebase.auth().currentUser.uid) === -1) {
+                  console.log('no esta el usuario');
+                  // saveUser(result);
+                  // return;
+                }
+              });
+            });
+          }
 
+
+          // console.log(result);
+          // console.log(result.additionalUserInfo.isNewUser);
+          // if(!result.additionalUserInfo.isNewUser) {
+          // } else {
+          //   console.log('usuario conocido');
+          // }
+        }).catch( error => {
+          console.log('error', error);
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          const credential = error.credential;
+          // ...
+        });
+
+    firebase.auth()
+      .onAuthStateChanged( user => {
+        if (user) {
+          console.log('onAuthStateChanged', user);
           /**
            * !FIXME - extraer fuera
            */
@@ -85,31 +118,26 @@ const app = (function(){
       });
   }
 
-  function saveUser(response) {
-    user.uid = response.uid;
-    user.displayName = response.displayName;
-    user.creationTime = response.metadata.a;
-    user.photoURL = response.photoURL;
-    users.child(user.uid).set(user);
-  }
-
   function loginByTwitter () {
     const provider = new firebase.auth.TwitterAuthProvider();
 
     firebase.auth()
-      .signInWithRedirect(provider)
-        .then( user => {
-          console.log('signInWithRedirect', user);
-        })
-        .catch(err => {
-          console.log('signInWithRedirect', err);
-        })
+      .signInWithRedirect(provider);
   }
 
   function logOut () {
     main.innerHTML = '';
     firebase.auth().signOut();
     router.navigate('/');
+  }
+
+  function saveUser(response) {
+    user.uid = response.user.uid;
+    user.username = response.additionalUserInfo.username;
+    user.displayName = response.user.displayName;
+    user.creationTime = response.user.metadata.a;
+    user.photoURL = response.user.photoURL;
+    users.child(user.uid).set(user);
   }
 
   /**
@@ -155,12 +183,6 @@ const app = (function(){
       published: false,
       rejected: true,
     });
-
-    textArea.textContent = '';
-
-  }
-
-  function myTweetsList() {
 
   }
 
