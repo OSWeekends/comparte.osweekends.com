@@ -29,13 +29,28 @@ const app = (function(){
     firebase.auth()
       .getRedirectResult()
         .then( result => {
-          console.log(result);
-          console.log(result.additionalUserInfo.isNewUser);
-          if(!result.additionalUserInfo.isNewUser) {
-            saveUser(result);
-          } else {
-            console.log('usuario conocido');
+
+          if (result.user !== null) {
+            users.on('value', snapshot => {
+              snapshot.forEach( user => {
+                console.log(snapshot instanceof Object);
+                console.log(user.key);
+                if (user.key.indexOf(firebase.auth().currentUser.uid) === -1) {
+                  console.log('no esta el usuario');
+                  // saveUser(result);
+                  // return;
+                }
+              });
+            });
           }
+
+
+          // console.log(result);
+          // console.log(result.additionalUserInfo.isNewUser);
+          // if(!result.additionalUserInfo.isNewUser) {
+          // } else {
+          //   console.log('usuario conocido');
+          // }
         }).catch( error => {
           console.log('error', error);
           // Handle Errors here.
@@ -158,7 +173,7 @@ const app = (function(){
     const textArea = document.querySelector('#tweet').textContent;
 
     uid = firebase.auth().currentUser.uid;
-    const user = users.child(token);
+    const user = users.child(uid);
     const tweets = user.child('tweets');
     const tweet = tweets.push();
 
@@ -168,6 +183,12 @@ const app = (function(){
       published: false,
       rejected: true,
     });
+
+    // textArea.textContent = '';
+
+  }
+
+  function myTweetsList() {
 
   }
 
