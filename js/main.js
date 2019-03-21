@@ -189,7 +189,7 @@ const app = (function(){
 
             key.forEach( tweet => {
 
-              myTweets.push(
+              myTweets.unshift(
                 {
                   date: tweet.val().date,
                   message: tweet.val().message,
@@ -209,7 +209,10 @@ const app = (function(){
   }
 
   function renderMyTweets (myTweets) {
-    console.log(myTweets);
+    if (document.querySelector('.container-tweets')) {
+      document.querySelector('.container-tweets').innerHTML = '';
+    }
+
     let template = '<div class="container-tweets">';
     template += '<ul>';
       myTweets.forEach(tweet => {
