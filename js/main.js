@@ -22,7 +22,7 @@ const app = (function(){
 
   router
     .on('/', init)
-    .on('/admin', getTweets)
+    .on('/admin', getAllTweets)
     .resolve();
 
   function init() {
@@ -31,26 +31,12 @@ const app = (function(){
         .then( result => {
 
           if (result.user !== null) {
-            users.on('value', snapshot => {
-              snapshot.forEach( user => {
-                console.log(snapshot instanceof Object);
-                console.log(user.key);
-                if (user.key.indexOf(firebase.auth().currentUser.uid) === -1) {
-                  console.log('no esta el usuario');
-                  // saveUser(result);
-                  // return;
-                }
-              });
-            });
+            if (result.additionalUserInfo.isNewUser){
+              saveUser(result);
+            } else {
+              console.log('ya está en la base de datos');
+            }
           }
-
-
-          // console.log(result);
-          // console.log(result.additionalUserInfo.isNewUser);
-          // if(!result.additionalUserInfo.isNewUser) {
-          // } else {
-          //   console.log('usuario conocido');
-          // }
         }).catch( error => {
           console.log('error', error);
           // Handle Errors here.
@@ -67,6 +53,7 @@ const app = (function(){
       .onAuthStateChanged( user => {
         if (user) {
           console.log('onAuthStateChanged', user);
+          getMyTweets();
           /**
            * !FIXME - extraer fuera
            */
@@ -137,6 +124,7 @@ const app = (function(){
     user.displayName = response.user.displayName;
     user.creationTime = response.user.metadata.a;
     user.photoURL = response.user.photoURL;
+
     users.child(user.uid).set(user);
   }
 
@@ -184,48 +172,51 @@ const app = (function(){
       rejected: true,
     });
 
+    getMyTweets();
+
   }
 
-  function getTweets () {
-
-    let userToRender = [];
+  function getMyTweets () {
 
     users.on('value', (snapshot) => {
-      // console.log(snapshot.val());
 
       snapshot.forEach(user => {
-        // console.log(user.val());
+        let myTweets = [];
+        user.forEach(key => {
 
-        user.forEach(tweets => {
-          console.log(tweets.val());
-          // if (tweets.val() === 'tweets') {
-          //   console.log(tweets.val());
-          // }
+          if (key.key === 'tweets') {
+
+            key.forEach( tweet => {
+
+              myTweets.push(
+                {
+                  date: tweet.val().date,
+                  message: tweet.val().message,
+                  published: tweet.val().published
+                }
+              );
+            });
+
+            renderMyTweets(myTweets);
+          }
+
         });
 
-        // let listUser = {};
-        // listUser.name = user.val().displayName;
-        // listUser.tweet = [];
-
-        // if (user.val().tweets && user.val().tweets === 'tweets') {
-
-        //   tweets.forEach(tweet => {
-        //     listUser.tweet.push(
-        //       {
-        //         id: tweet.key,
-        //         message: tweet.val().message,
-        //         published: tweet.val().published
-        //       }
-        //     );
-        //   });
-        //   userToRender.push(listUser);
-        //   // console.log(userToRender);
-        // }
       });
 
-      renderListTweets(userToRender);
     });
+  }
 
+  function renderMyTweets (myTweets) {
+    console.log(myTweets);
+    const mainContainer = document.querySelector('#main-container');
+    const containerTweets = document.createElement('DIV');
+    mainContainer.appendChild(containerTweets);
+    // mainContainer.insertAdjacentHTML('afterend');
+  }
+
+  function getAllTweets () {
+    // renderListTweets()
   }
 
   function renderListTweets (userToRender) {
