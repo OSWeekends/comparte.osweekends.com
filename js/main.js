@@ -158,7 +158,7 @@ const app = (function(){
   }
 
   function sendTweet () {
-    const textArea = document.querySelector('#tweet').textContent;
+    const textArea = document.querySelector('#tweet');
 
     uid = firebase.auth().currentUser.uid;
     const user = users.child(uid);
@@ -166,14 +166,15 @@ const app = (function(){
     const tweet = tweets.push();
 
     tweet.update({
-      message: textArea,
+      message: textArea.textContent,
       date: new Date().getTime(),
       published: false,
       rejected: true,
     });
 
-    getMyTweets();
+    textArea.textContent = '';
 
+    getMyTweets();
   }
 
   function getMyTweets () {
@@ -209,26 +210,71 @@ const app = (function(){
 
   function renderMyTweets (myTweets) {
     console.log(myTweets);
-    const mainContainer = document.querySelector('#main-container');
-    const containerTweets = document.createElement('DIV');
-    mainContainer.appendChild(containerTweets);
-    // mainContainer.insertAdjacentHTML('afterend');
+    let template = '<div class="container-tweets">';
+    template += '<ul>';
+      myTweets.forEach(tweet => {
+        template += '<li>';
+        template += '<div>';
+        template += '<p>Fecha: ' + new Date(tweet.date).toLocaleString() + '</p>';
+        template += '<p>' + tweet.message + '</p>';
+        template += '<p>Estado: ' + isTweetPublished(tweet.published) + '</p>';
+        template += '</div>';
+        template += '</li>';
+      });
+    template += '</ul>';
+    template += '</div>';
+
+    document.querySelector('.main-container').insertAdjacentHTML('afterend', template);
+
+  }
+
+  function isTweetPublished (state) {
+    return (state) ? 'publicado!' : 'no publicado';
   }
 
   function getAllTweets () {
-    // renderListTweets()
+    users.on('value', (snapshot) => {
+
+      let allTweets = [];
+      let tweetsByUser = {
+        name: '',
+        tweets: []
+      };
+
+      snapshot.forEach(user => {
+        tweetsByUser.name = user.val().username;
+
+        user.forEach(key => {
+          if (key.key === 'tweets') {
+
+            key.forEach( tweet => {
+              tweetsByUser.tweets.push(
+                {
+                  date: tweet.val().date,
+                  message: tweet.val().message,
+                  published: tweet.val().published
+                }
+              );
+            });
+          }
+
+        });
+        allTweets.push(tweetsByUser);
+
+      });
+      renderAllTweets(allTweets);
+
+    });
   }
 
-  function renderListTweets (userToRender) {
-    console.log(userToRender);
-
+  function renderAllTweets (userToRender) {
     let template;
 
     userToRender.forEach( group => {
       template = '<div class="">' +group.name + '</div>';
       template += '<div>';
 
-      group.tweet.forEach( tweet => {
+      group.tweets.forEach( tweet => {
         template += '<div class="">' + tweet.message + '</div>';
         template += '<ul>';
         template += '<li class=""><button>publicar</button></li>';
