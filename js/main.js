@@ -253,6 +253,7 @@ const app = (function(){
             key.forEach( tweet => {
               tweetsByUser.tweets.push(
                 {
+                  id: tweet.key,
                   date: tweet.val().date,
                   message: tweet.val().message,
                   published: tweet.val().published
@@ -273,6 +274,8 @@ const app = (function(){
   function renderAllTweets (userToRender) {
     let template;
 
+    console.log(userToRender);
+
     userToRender.forEach( group => {
       template = '<div class="">' +group.name + '</div>';
       template += '<div>';
@@ -280,12 +283,19 @@ const app = (function(){
       group.tweets.forEach( tweet => {
         template += '<div class="">' + tweet.message + '</div>';
         template += '<ul>';
-        template += '<li class=""><button>publicar</button></li>';
-        template += '<li class=""><button>rechazar</button></li>';
+        template += '<li class=""><button id='+ tweet.id +' class="editTweet">editar</button></li>';
+        template += '<li class=""><button id='+ tweet.id +' class="publishTweet">publicar</button></li>';
+        template += '<li class=""><button id='+ tweet.id +' class="rejectTweet">rechazar</button></li>';
         template += '</ul>';
       });
       main.insertAdjacentHTML('afterbegin', template);
     });
+
+    document.querySelector()
+  }
+
+  function publishTweet() {
+
   }
 
 })();
