@@ -169,7 +169,7 @@ const app = (function(){
       message: textArea.textContent,
       date: new Date().getTime(),
       published: false,
-      rejected: true,
+      rejected: false,
     });
 
     textArea.textContent = '';
@@ -236,15 +236,17 @@ const app = (function(){
   }
 
   function getAllTweets () {
-    users.on('value', (snapshot) => {
+    users.once('value', (snapshot) => {
 
       let allTweets = [];
       let tweetsByUser = {
+        id: '',
         name: '',
         tweets: []
       };
 
       snapshot.forEach(user => {
+        tweetsByUser.id = user.val().uid;
         tweetsByUser.name = user.val().username;
 
         user.forEach(key => {
@@ -277,25 +279,45 @@ const app = (function(){
     console.log(userToRender);
 
     userToRender.forEach( group => {
-      template = '<div class="">' +group.name + '</div>';
-      template += '<div>';
-
-      group.tweets.forEach( tweet => {
-        template += '<div class="">' + tweet.message + '</div>';
-        template += '<ul>';
-        template += '<li class=""><button id='+ tweet.id +' class="editTweet">editar</button></li>';
-        template += '<li class=""><button id='+ tweet.id +' class="publishTweet">publicar</button></li>';
-        template += '<li class=""><button id='+ tweet.id +' class="rejectTweet">rechazar</button></li>';
-        template += '</ul>';
-      });
+      template = '<div id="' + group.id + '" class="">' +group.name;
+        template += '<div>';
+          group.tweets.forEach( tweet => {
+            template += '<div class="">' + tweet.message + '</div>';
+            template += '<ul>';
+            template += '<li class=""><button id='+ tweet.id +' name="editTweet" class="btn">editar</button></li>';
+            template += '<li class=""><button id='+ tweet.id +' name="publishTweet" class="btn">publicar</button></li>';
+            template += '<li class=""><button id='+ tweet.id +' name="rejectTweet" class="btn">rechazar</button></li>';
+            template += '</ul>';
+          });
+        template += '</div>';
+      template += '</div>';
       main.insertAdjacentHTML('afterbegin', template);
     });
 
-    document.querySelector()
+    document.querySelector('main').addEventListener('click', (event) => {
+      if (event.target.tagName === 'BUTTON' && event.target.name === 'editTweet') {
+        editTweet(event);
+      } else if (event.target.tagName === 'BUTTON' && event.target.name === 'publishTweet') {
+        publishTweet(event);
+      } else if (event.target.tagName === 'BUTTON' && event.target.name === 'rejectTweet') {
+        rejectTweet(event);
+      }
+
+    }, false);
   }
 
-  function publishTweet() {
+  function editTweet(event) {
 
+  }
+
+  function publishTweet(event) {
+    const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/${event.target.id}`);
+    ref.update({published: true});
+  }
+
+  function rejectTweet(event) {
+    const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/${event.target.id}`);
+    ref.update({rejectd: true});
   }
 
 })();
