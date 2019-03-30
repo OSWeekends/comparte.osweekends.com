@@ -22,7 +22,8 @@ const app = (function(){
 
   router
     .on('/', init)
-    .on('/admin', getAllTweets)
+    .on('/admin', loginByEmail)
+    .on('/admin-tweets', getAllTweets)
     .resolve();
 
   function init() {
@@ -217,11 +218,11 @@ const app = (function(){
     template += '<ul>';
       myTweets.forEach(tweet => {
         template += '<li>';
-        template += '<div>';
-        template += '<p>Fecha: ' + new Date(tweet.date).toLocaleString() + '</p>';
         template += '<p>' + tweet.message + '</p>';
-        template += '<p>Estado: ' + isTweetPublished(tweet.published) + '</p>';
-        template += '</div>';
+          template += '<div class="container-tweets-state">';
+            template += '<div>' + new Date(tweet.date).toLocaleString() + '</div>';
+            template += '<div>Estado: ' + isTweetPublished(tweet.published) + '</div>';
+          template += '</div>';
         template += '</li>';
       });
     template += '</ul>';
@@ -318,6 +319,37 @@ const app = (function(){
   function rejectTweet(event) {
     const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/${event.target.id}`);
     ref.update({rejectd: true});
+  }
+
+  function loginByEmail() {
+
+    document.querySelector('main').innerHTML = '';
+    let template = '';
+    template =
+    `
+    <div id="ows-login">
+      <input id="login-email" type="text" placeholder="correo electrónico"/>
+      <input id="login-password" type="password" placeholder="contraseña"/>
+      <a href="#" id="login-login">entrar</a>
+    </div>
+    `;
+
+    document.querySelector('main').insertAdjacentHTML('afterbegin', template);
+    document.querySelector('#login-login').addEventListener('click', login, false);
+
+  }
+
+  function login () {
+    const email = document.querySelector('#login-email').value;
+    const password = document.querySelector('#login-password').value;
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(data => {
+        router.navigate(`/admin-tweets/`);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
 })();

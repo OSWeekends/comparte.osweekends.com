@@ -86,6 +86,20 @@ footer {
   color: white;
 }
 
+.container-tweets{
+}
+
+.container-tweets ul{
+  padding-left: 0;
+  list-style: none;
+}
+
+.container-tweets-state {
+  display: flex;
+  justify-content: space-between;
+}
+
+
 
 
 /* media queries */
