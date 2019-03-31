@@ -91,7 +91,7 @@ const app = (function(){
           <div class="main-container">
             <div class="main-container--div">
               <button>login con twitter</button>
-              <p><input type="checkbox" /> ¿Eres admin?</p>
+              <label for="admin-checkbox" ><input type="checkbox" id="admin-checkbox" /> ¿Eres admin?</label>
             </div>
           </div>
           `;
@@ -99,9 +99,16 @@ const app = (function(){
           main.insertAdjacentHTML('afterbegin', template);
           document.querySelector('.main-container button')
             .addEventListener('click', loginByTwitter, false);
-
+          document.querySelector('#admin-checkbox')
+            .addEventListener('click', goToAdmin, false);
         }
       });
+  }
+
+  function goToAdmin(event) {
+    if (event.target.checked) {
+      router.navigate(`/admin`);
+    }
   }
 
   function toggleHeader(user) {
