@@ -52,18 +52,15 @@ const app = (function(){
 
     firebase.auth()
       .onAuthStateChanged( user => {
+
         if (user) {
-          console.log('onAuthStateChanged', user);
+          if (user.uid === '8TCSD9FPoTh2RqDwq98cZQhMuIn2') {
+            toggleHeader(user);
+            return;
+          }
+
           getMyTweets();
-          /**
-           * !FIXME - extraer fuera
-           */
-          document.querySelector('#header-user--username').textContent = user.displayName;
-          const img = document.createElement('IMG');
-          img.setAttribute('src', user.photoURL);
-          document.querySelector('.header-avatar').appendChild(img);
-          document.querySelector('.header-user--logout button')
-            .addEventListener('click', logOut, false);
+          toggleHeader(user);
 
           const template =
           `
@@ -85,9 +82,12 @@ const app = (function(){
           document.querySelector('#send-tweet')
             .addEventListener('click', sendTweet, false);
 
-        } else {
 
+        } else {
+          console.log('else', user);
+          router.navigate('/');
           document.querySelector('#header-welcome').style.display = 'none';
+          document.querySelector('main').innerHTML = '';
           const template =
           `
           <div class="main-container">
@@ -104,6 +104,27 @@ const app = (function(){
 
         }
       });
+  }
+
+  function toggleHeader(user) {
+    if (user.uid !== '8TCSD9FPoTh2RqDwq98cZQhMuIn2') {
+      document.querySelector('header #header-welcome').style.display = 'flex';
+      document.querySelector('#header-user--username').textContent = user.displayName;
+      const img = document.createElement('IMG');
+      img.setAttribute('src', user.photoURL);
+      document.querySelector('.header-avatar').appendChild(img);
+      document.querySelector('.header-user--logout button')
+        .addEventListener('click', logOut, false);
+    } else {
+      document.querySelector('header #header-welcome').style.display = 'flex';
+      const adorableImg = `https://api.adorable.io/avatars/75/${user.email}`
+      document.querySelector('#header-user--username').textContent = 'ADMIN';
+      const img = document.createElement('IMG');
+      img.setAttribute('src', adorableImg);
+      document.querySelector('.header-avatar').appendChild(img);
+      document.querySelector('.header-user--logout button')
+        .addEventListener('click', logOut, false);
+    }
   }
 
   function loginByTwitter () {
@@ -209,6 +230,8 @@ const app = (function(){
     });
   }
 
+  //////////////////////////////////////////////
+
   function renderMyTweets (myTweets) {
     if (document.querySelector('.container-tweets')) {
       document.querySelector('.container-tweets').innerHTML = '';
@@ -237,6 +260,7 @@ const app = (function(){
   }
 
   function getAllTweets () {
+    document.querySelector('main').innerHTML = '';
     users.once('value', (snapshot) => {
 
       let allTweets = [];
@@ -270,7 +294,6 @@ const app = (function(){
 
       });
       renderAllTweets(allTweets);
-
     });
   }
 
@@ -322,7 +345,7 @@ const app = (function(){
   }
 
   function loginByEmail() {
-
+    document.querySelector('header #header-welcome').style.display = 'none';
     document.querySelector('main').innerHTML = '';
     let template = '';
     template =
@@ -340,6 +363,7 @@ const app = (function(){
   }
 
   function login () {
+
     const email = document.querySelector('#login-email').value;
     const password = document.querySelector('#login-password').value;
 

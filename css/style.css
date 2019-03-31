@@ -64,7 +64,7 @@ header .header-logo {
 }
 
 header #header-welcome {
-  display: flex;
+  display: none;
   flex: 0 1 350px;
   justify-content: space-around;
 }
