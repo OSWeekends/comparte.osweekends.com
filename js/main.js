@@ -52,7 +52,6 @@ const app = (function(){
 
     firebase.auth()
       .onAuthStateChanged( user => {
-
         if (user) {
           if (user.uid === '8TCSD9FPoTh2RqDwq98cZQhMuIn2') {
             toggleHeader(user);
@@ -84,7 +83,6 @@ const app = (function(){
 
 
         } else {
-          console.log('else', user);
           router.navigate('/');
           document.querySelector('#header-welcome').style.display = 'none';
           document.querySelector('main').innerHTML = '';
@@ -110,18 +108,16 @@ const app = (function(){
     if (user.uid !== '8TCSD9FPoTh2RqDwq98cZQhMuIn2') {
       document.querySelector('header #header-welcome').style.display = 'flex';
       document.querySelector('#header-user--username').textContent = user.displayName;
-      const img = document.createElement('IMG');
-      img.setAttribute('src', user.photoURL);
-      document.querySelector('.header-avatar').appendChild(img);
+      document.querySelector('header #header-welcome .header-avatar img').setAttribute('src', user.photoURL);
+      // document.querySelector('.header-avatar').appendChild(img);
       document.querySelector('.header-user--logout button')
         .addEventListener('click', logOut, false);
     } else {
       document.querySelector('header #header-welcome').style.display = 'flex';
-      const adorableImg = `https://api.adorable.io/avatars/75/${user.email}`
+      const adorableImg = `https://api.adorable.io/avatars/48/${user.email}`
       document.querySelector('#header-user--username').textContent = 'ADMIN';
-      const img = document.createElement('IMG');
-      img.setAttribute('src', adorableImg);
-      document.querySelector('.header-avatar').appendChild(img);
+      document.querySelector('header #header-welcome .header-avatar img').setAttribute('src', adorableImg);
+      // document.querySelector('.header-avatar').appendChild(img);
       document.querySelector('.header-user--logout button')
         .addEventListener('click', logOut, false);
     }
