@@ -99,6 +99,25 @@ footer {
   justify-content: space-between;
 }
 
+.ows-user-tweets--username {
+  font-size: 1.4rem;
+  margin-top: 20px;
+}
+
+.ows-user-tweets--details {
+  margin-top: 20px;
+}
+
+ul.ows-user-tweets--buttons {
+  padding-left: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+li.ows-btn-actions {
+  list-style: none;
+}
+
 
 
 

@@ -306,19 +306,21 @@ const app = (function(){
     console.log(userToRender);
 
     userToRender.forEach( group => {
-      template = '<div id="' + group.id + '" class="ows-list-tweets">';
-        template += '<div>' + group.name + '</div>';
-        template += '<div>';
+      template = '<div id="' + group.id + '" class="ows-user-tweets">';
+        template += '<div class="ows-user-tweets--username">' + group.name + '</div>';
+
           group.tweets.forEach( tweet => {
-            template += '<div class="">' + tweet.message;
-              template += '<ul>';
-                template += '<li class=""><button id='+ tweet.id +' name="editTweet" class="btn">editar</button></li>';
-                template += '<li class=""><button id='+ tweet.id +' name="publishTweet" class="btn">publicar</button></li>';
-                template += '<li class=""><button id='+ tweet.id +' name="rejectTweet" class="btn">rechazar</button></li>';
+            template += '<div class="ows-user-tweets--details">';
+              template += '<div class="ows-user-tweets--message">' + tweet.message + '</div>';
+              template += '<ul class="ows-user-tweets--buttons">';
+                template += '<li class="ows-btn-actions"><button id='+ tweet.id +' name="editTweet" class="btn">editar</button></li>';
+                template += '<li class="ows-btn-actions"><button id='+ tweet.id +' name="publishTweet" class="btn">publicar</button></li>';
+                template += '<li class="ows-btn-actions"><button id='+ tweet.id +' name="rejectTweet" class="btn">rechazar</button></li>';
               template += '</ul>';
+              template += '</div>';
             template += '</div>';
           });
-        template += '</div>';
+
       template += '</div>';
       main.insertAdjacentHTML('afterbegin', template);
     });
