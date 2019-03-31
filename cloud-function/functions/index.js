@@ -14,8 +14,7 @@ const Twitter = new twit(config);
  */
 exports.updateAndSendTweet = functions.database.ref('/users/{uid}/tweets/{id}')
   .onUpdate( (snapshot, context) => {
-    console.log('state', snapshot.before.child('state').val());
-    if (snapshot.before.child('state').val() === true) {
+    if (snapshot.after.child('state').val() === true) {
       console.log('enviando tweet -->', snapshot.before.child('message').val());
     }
   });

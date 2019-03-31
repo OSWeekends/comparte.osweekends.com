@@ -314,7 +314,7 @@ const app = (function(){
         template += '<div class="ows-user-tweets--username">' + group.name + '</div>';
 
           group.tweets.forEach( tweet => {
-            template += '<div class="ows-user-tweets--details">';
+            template += '<div class="ows-user-tweets--tweet">';
               template += '<div class="ows-user-tweets--date">' + new Date(tweet.date).toLocaleString() + '</div>';
               template += '<div class="ows-user-tweets--message">' + tweet.message + '</div>';
               template += '<ul class="ows-user-tweets--buttons">';
@@ -342,17 +342,22 @@ const app = (function(){
   }
 
   function editTweet(event) {
+    console.log(event);
+    const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/`);
+    ref.child(event.target.id).remove();
 
   }
 
   function publishTweet(event) {
     const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/${event.target.id}`);
     ref.update({state: true});
+    event.target.style.border = '1px solid green';
   }
 
   function rejectTweet(event) {
     const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/${event.target.id}`);
-    ref.update({rejectd: true});
+    ref.update({state: false});
+    event.target.style.border = '1px solid red';
   }
 
   function loginByEmail() {
