@@ -1,6 +1,5 @@
 const app = (function(){
 
-  let token;
   const root = null;
   const useHash = true; // Defaults to: false
   const hash = '#!'; // Defaults to: '#'
@@ -193,8 +192,7 @@ const app = (function(){
     tweet.update({
       message: textArea.textContent,
       date: new Date().getTime(),
-      published: false,
-      rejected: false,
+      state: '',
     });
 
     textArea.textContent = '';
@@ -218,7 +216,7 @@ const app = (function(){
                 {
                   date: tweet.val().date,
                   message: tweet.val().message,
-                  published: tweet.val().published
+                  state: tweet.val().state
                 }
               );
             });
@@ -247,7 +245,7 @@ const app = (function(){
         template += '<p>' + tweet.message + '</p>';
           template += '<div class="container-tweets-state">';
             template += '<div>' + new Date(tweet.date).toLocaleString() + '</div>';
-            template += '<div>Estado: ' + isTweetPublished(tweet.published) + '</div>';
+            template += '<div>Estado: ' + isTweetPublished(tweet.state) + '</div>';
           template += '</div>';
         template += '</li>';
       });
@@ -259,7 +257,13 @@ const app = (function(){
   }
 
   function isTweetPublished (state) {
-    return (state) ? 'publicado!' : 'no publicado';
+    if (state === '') {
+      return 'Pendiente';
+    } else if (state === true) {
+      return 'Aprovado';
+    } else if (state === false) {
+      return 'Rechazado';
+    }
   }
 
   function getAllTweets () {
@@ -286,7 +290,7 @@ const app = (function(){
                   id: tweet.key,
                   date: tweet.val().date,
                   message: tweet.val().message,
-                  published: tweet.val().published
+                  state: tweet.val().state
                 }
               );
             });
@@ -343,7 +347,7 @@ const app = (function(){
 
   function publishTweet(event) {
     const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/${event.target.id}`);
-    ref.update({published: true});
+    ref.update({state: true});
   }
 
   function rejectTweet(event) {
