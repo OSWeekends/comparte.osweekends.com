@@ -260,7 +260,7 @@ const app = (function(){
     if (state === '') {
       return 'Pendiente';
     } else if (state === true) {
-      return 'Aprovado';
+      return 'Aprobado';
     } else if (state === false) {
       return 'Rechazado';
     }
@@ -315,15 +315,15 @@ const app = (function(){
 
           group.tweets.forEach( tweet => {
             template += '<div class="ows-user-tweets--details">';
+              template += '<div class="ows-user-tweets--date">' + new Date(tweet.date).toLocaleString() + '</div>';
               template += '<div class="ows-user-tweets--message">' + tweet.message + '</div>';
               template += '<ul class="ows-user-tweets--buttons">';
                 template += '<li class="ows-btn-actions"><button id='+ tweet.id +' name="editTweet" class="btn">editar</button></li>';
                 template += '<li class="ows-btn-actions"><button id='+ tweet.id +' name="publishTweet" class="btn">publicar</button></li>';
                 template += '<li class="ows-btn-actions"><button id='+ tweet.id +' name="rejectTweet" class="btn">rechazar</button></li>';
               template += '</ul>';
-              template += '</div>';
             template += '</div>';
-          });
+            });
 
       template += '</div>';
       main.insertAdjacentHTML('afterbegin', template);
