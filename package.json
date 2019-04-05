@@ -1,0 +1,33 @@
+{
+  "name": "proyecto2",
+  "version": "1.0.0",
+  "description": "Gestión de twitter automagica ^^",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OSWeekends/comparte.osweekends.com.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OSWeekends/comparte.osweekends.com/issues"
+  },
+  "homepage": "https://github.com/OSWeekends/comparte.osweekends.com#readme",
+  "devDependencies": {
+    "@babel/cli": "7.2.3",
+    "@babel/core": "7.4.0",
+    "@babel/preset-env": "7.4.2",
+    "core-js": "2.6.5",
+    "npm-run-all": "4.1.5",
+    "onchange": "5.2.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "7.4.3",
+    "@babel/runtime": "7.4.3",
+    "navigo": "^6.0.2"
+  }
+}
