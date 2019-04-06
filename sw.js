@@ -7,7 +7,8 @@ const APP_SHELL = [
   'index.html',
   './css/style.css',
   '/img/osw-logo.svg',
-  'js/main.js'
+  'js/main.js',
+  'js/config.js'
 ];
 
 const APP_SHELL_INMUTABLE = [
@@ -60,10 +61,15 @@ self.addEventListener('fetch', event => {
         console.log(event.request.url);
         return fetch(event.request)
           .then( resRequest => {
-            // caches.open(CACHE_DINAMIC)
-            //   .then(cache => {
-            //     cache.addAll(resRequest.request, res)
-            //   });
+            if (resRequest.ok) {
+              caches.open(CACHE_DINAMIC)
+                .then(cache => {
+                  cache.put(event.request, resRequest.clone());
+                  return res.clone();
+                })
+            } else {
+              return resRequest;
+            }
           });
       }
 
