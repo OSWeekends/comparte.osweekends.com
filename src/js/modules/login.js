@@ -1,3 +1,5 @@
+const variables = require('./variables');
+
 module.exports = function init() {
   firebase.auth()
     .getRedirectResult()
@@ -55,7 +57,7 @@ module.exports = function init() {
 
 
       } else {
-        router.navigate('/');
+        variables.router.navigate('/');
         document.querySelector('#header-welcome').style.display = 'none';
         document.querySelector('main').innerHTML = '';
         const template =
@@ -68,11 +70,54 @@ module.exports = function init() {
         </div>
         `;
 
-        main.insertAdjacentHTML('afterbegin', template);
+        variables.main.insertAdjacentHTML('afterbegin', template);
         document.querySelector('.main-container button')
           .addEventListener('click', loginByTwitter, false);
         document.querySelector('#admin-checkbox')
           .addEventListener('click', goToAdmin, false);
       }
     });
-}
+};
+
+module.exports = function loginByTwitter () {
+  const provider = new firebase.auth.TwitterAuthProvider();
+
+  firebase.auth()
+    .signInWithRedirect(provider);
+};
+
+module.exports = function logOut () {
+  main.innerHTML = '';
+  firebase.auth().signOut();
+  variables.router.navigate('/');
+};
+
+module.exports = function login () {
+  const email = document.querySelector('#login-email').value;
+  const password = document.querySelector('#login-password').value;
+
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(data => {
+      variables.router.navigate(`/admin-tweets/`);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
+
+module.exports = function loginByEmail() {
+  document.querySelector('header #header-welcome').style.display = 'none';
+  document.querySelector('main').innerHTML = '';
+  let template = '';
+  template =
+  `
+  <div id="ows-login">
+    <input id="login-email" type="text" placeholder="correo electrónico"/>
+    <input id="login-password" type="password" placeholder="contraseña"/>
+    <a href="#" id="login-login">entrar</a>
+  </div>
+  `;
+
+  document.querySelector('main').insertAdjacentHTML('afterbegin', template);
+  document.querySelector('#login-login').addEventListener('click', module.exports.login, false);
+};
