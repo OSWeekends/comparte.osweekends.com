@@ -67,12 +67,12 @@ const app = (function(){
           const template =
           `
             <div class="main-container">
-              <div class="main-container--div">
+              <div class="main-container--tweet">
                 <div class="main-textarea">
                   <div id="tweet" name="tweet" placeholder="tu tweet..." contentEditable="true"></div>
                 </div>
 
-                <button id="send-tweet">Enviar tweet</button>
+                <button id="main-container--tweet-send-tweet">Enviar tweet</button>
               </div>
             </div>
           `;
@@ -81,7 +81,7 @@ const app = (function(){
           document.querySelector('#tweet')
             .addEventListener('keyup', limitChars, false);
 
-          document.querySelector('#send-tweet')
+          document.querySelector('#main-container--tweet-send-tweet')
             .addEventListener('click', sendTweet, false);
 
 
@@ -251,9 +251,9 @@ const app = (function(){
       myTweets.forEach(tweet => {
         template += '<li>';
         template += '<p>' + tweet.message + '</p>';
-          template += '<div class="container-tweets-state">';
-            template += '<div>' + new Date(tweet.date).toLocaleString() + '</div>';
-            template += '<div>Estado: ' + isTweetPublished(tweet.state) + '</div>';
+          template += '<div class="container-tweets-details">';
+            template += '<div class="container-tweets-details-date">' + new Date(tweet.date).toLocaleString() + '</div>';
+            template += '<div class="container-tweets-details-state"><span class="container-tweets-details-state-">Estado:</span> ' + isTweetPublished(tweet.state) + '</div>';
           template += '</div>';
         template += '</li>';
       });
@@ -379,7 +379,6 @@ const app = (function(){
         <div class="main-container--div--logo">
           <img src="./../src/img/icons/icon-72x72.png" />
         </div>
-
 
         <div id="ows-login">
           <input id="login-email" type="text" placeholder="correo electrónico"/>

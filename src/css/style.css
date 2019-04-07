@@ -19,13 +19,13 @@ main {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-
-main .main-container {
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+}
+
+main .main-container {
   display: flex;
   align-items: center;
   height: inherit;
@@ -41,6 +41,14 @@ main .main-container--div--logo {
   margin-bottom: 20px;
 }
 
+main .main-container--tweet {
+  margin-top: 20px;
+  width: 100%;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
 main .main-container--div--btn-twitter {
   color: #fff;
   background-color: #55acee;
@@ -48,7 +56,7 @@ main .main-container--div--btn-twitter {
 
   position: relative;
   padding-left: 44px;
-  text-align: left;
+  text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -95,10 +103,38 @@ main div#tweet {
   border: 2px solid #e6ecf0;
   border-radius: 8px;
   line-height: 20px;
-  width: 300px;
+  /* width: 300px; */
   min-height: 80px;
   vertical-align: top;
   padding: 5px 10px;
+}
+
+main .main-container--tweet #main-container--tweet-send-tweet {
+  color: #fff;
+  background-color: #55acee;
+  border-color: rgba(0,0,0,0.2);
+
+  position: relative;
+  padding-left: 44px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  width: 100%;
+
+  padding: 6px 12px;
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
 }
 
 
@@ -111,11 +147,10 @@ header {
   border-bottom: 1px solid #999;
   display: flex;
   justify-content: space-between;
-  padding: 5px 20px;
 }
 
 header .header-logo {
-  height: 90px;
+  /* height: 90px; */
 }
 
 header #header-welcome {
@@ -149,9 +184,27 @@ footer {
   list-style: none;
 }
 
-.container-tweets-state {
+.container-tweets ul li{
+  border-bottom: 1px solid #10316b;
+  padding-bottom: 15px;
+}
+
+.container-tweets-details {
   display: flex;
   justify-content: space-between;
+}
+
+.container-tweets-details-date {
+  font-size: 14px;
+}
+
+.container-tweets-details-state {
+  font-size: 14px;;
+}
+
+.container-tweets-details-state .container-tweets-details-state-{
+  color: #10316b;
+  font-weight: bold;
 }
 
 .ows-user-tweets--username {
@@ -181,6 +234,9 @@ li.ows-btn-actions {
 @media (max-width: 576px) {
   .main-container {
     width: auto;
+  }
+  footer {
+    display: none;
   }
 }
 
