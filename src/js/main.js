@@ -330,7 +330,10 @@ const app = (function(){
           template += '</img>';
         template += '</div>';
         template += '<div class="ows-user-tweets--details">';
-          template += '<div class="ows-user-tweets--date">' + new Date(tweet.tweetDate).toLocaleString() + '</div>';
+          template += '<div class="ows-user-tweets--date-user">';
+            template += '<div class="ows-user-tweets--date">' + new Date(tweet.tweetDate).toLocaleString() + '</div>';
+            template += '<div class="ows-user-tweets--user">@' + tweet.userName + '</div>';
+          template += '</div>';
           template += '<div class="ows-user-tweets--message">' + tweet.tweetMessage + '</div>';
           template += '<ul class="ows-user-tweets--buttons">';
             template += '<li class="ows-btn-actions"><button id='+ tweet.tweetId +' name="editTweet" class="btn">editar</button></li>';

@@ -194,15 +194,19 @@ footer {
   justify-content: space-between;
 }
 
-.container-tweets-details-date {
+.container-tweets-details-date,
+.ows-user-tweets--date {
   font-size: 14px;
+  color: #8e919a;
 }
 
 .container-tweets-details-state {
-  font-size: 14px;;
+  font-size: 14px;
+  color: #8e919a;
 }
 
-.container-tweets-details-state .container-tweets-details-state-{
+.container-tweets-details-state .container-tweets-details-state-,
+.ows-user-tweets--user{
   color: #10316b;
   font-weight: bold;
 }
@@ -214,12 +218,65 @@ footer {
 
 .ows-user-tweets--tweet {
   margin-top: 20px;
+  border-bottom: 1px solid #10316b;
+  display: flex;
+  align-items: center;
+}
+
+.ows-user-tweets--date {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.ows-user-tweets--details {
+  flex: 1;
+}
+
+.ows-user-tweets--date-user {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ows-btn-actions button {
+  color: #fff;
+  background-color: #0b8457;
+  border-color: rgba(0,0,0,0.2);
+
+  position: relative;
+  padding-left: 44px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  width: 100%;
+
+  padding: 6px 12px;
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.ows-user-tweets--tweet .ows-user-tweets--image {
+  margin-right: 10px;
+}
+
+.ows-user-tweets--tweet .ows-user-tweets--image img {
+  border-radius: 50%;
 }
 
 ul.ows-user-tweets--buttons {
   padding-left: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 li.ows-btn-actions {
