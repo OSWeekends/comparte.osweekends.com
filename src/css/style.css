@@ -37,6 +37,10 @@ main .main-container--div {
   align-items: center;
 }
 
+main .main-container--div--logo {
+  margin-bottom: 20px;
+}
+
 main .main-container--div--btn-twitter {
   color: #fff;
   background-color: #55acee;
@@ -52,7 +56,7 @@ main .main-container--div--btn-twitter {
   width: 100%;
 
   padding: 6px 12px;
-  margin: 20px 0 10px;
+  margin: 0 0 10px 0;
   font-size: 14px;
   font-weight: normal;
   line-height: 1.42857143;
@@ -63,6 +67,18 @@ main .main-container--div--btn-twitter {
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
+}
+
+main .main-container #ows-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main .main-container #ows-login input{
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 14px;
 }
 
 main p#admin-checkbox {
@@ -84,6 +100,8 @@ main div#tweet {
   vertical-align: top;
   padding: 5px 10px;
 }
+
+
 
 span.tweet-error {
   color: red;
