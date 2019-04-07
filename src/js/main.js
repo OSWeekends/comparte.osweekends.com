@@ -276,64 +276,71 @@ const app = (function(){
 
   function getAllTweets () {
     document.querySelector('main').innerHTML = '';
-    users.once('value', (snapshot) => {
 
+    users.once('value', (snapshot) => {
+      let userId;
+      let userName;
+      let userImage;
       let allTweets = [];
       let tweetsByUser = {
-        id: '',
-        name: '',
-        tweets: []
+        tweetId: '',
+        tweetDate: '',
+        tweetMessage: '',
+        tweetState: '',
+        userId: '',
+        userName: '',
+        userImage: ''
       };
 
       snapshot.forEach(user => {
-        tweetsByUser.id = user.val().uid;
-        tweetsByUser.name = user.val().username;
+        userId = user.val().uid;
+        userName = user.val().username;
+        userImage = user.val().photoURL;
 
         user.forEach(key => {
           if (key.key === 'tweets') {
-
             key.forEach( tweet => {
-              tweetsByUser.tweets.push(
-                {
-                  id: tweet.key,
-                  date: tweet.val().date,
-                  message: tweet.val().message,
-                  state: tweet.val().state
-                }
-              );
+              tweetsByUser.tweetId = tweet.key;
+              tweetsByUser.tweetDate = tweet.val().date;
+              tweetsByUser.tweetMessage = tweet.val().message;
+              tweetsByUser.tweetState = tweet.val().state;
+              tweetsByUser.userId = userId;
+              tweetsByUser.userName = userName;
+              tweetsByUser.userImage = userImage;
+              // console.log(tweetsByUser);
+              allTweets.unshift(Object.assign({}, tweetsByUser));
             });
           }
-
         });
-        allTweets.push(tweetsByUser);
-
       });
+      // console.log(allTweets);
       renderAllTweets(allTweets);
     });
   }
 
   function renderAllTweets (userToRender) {
-    let template;
+    document.querySelector('header').style.display = 'flex';
 
     console.log(userToRender);
 
-    userToRender.forEach( group => {
-      template = '<div id="' + group.id + '" class="ows-user-tweets">';
-        template += '<div class="ows-user-tweets--username">' + group.name + '</div>';
-
-          group.tweets.forEach( tweet => {
-            template += '<div class="ows-user-tweets--tweet">';
-              template += '<div class="ows-user-tweets--date">' + new Date(tweet.date).toLocaleString() + '</div>';
-              template += '<div class="ows-user-tweets--message">' + tweet.message + '</div>';
-              template += '<ul class="ows-user-tweets--buttons">';
-                template += '<li class="ows-btn-actions"><button id='+ tweet.id +' name="editTweet" class="btn">editar</button></li>';
-                template += '<li class="ows-btn-actions"><button id='+ tweet.id +' name="publishTweet" class="btn">publicar</button></li>';
-                template += '<li class="ows-btn-actions"><button id='+ tweet.id +' name="rejectTweet" class="btn">rechazar</button></li>';
-              template += '</ul>';
-            template += '</div>';
-            });
-
+    userToRender.forEach( tweet => {
+      let template = '<div class="ows-user-tweets--tweet">';
+        template += '<div class="ows-user-tweets--image">';
+          template += '<img src="' + tweet.userImage + '" class="ows-user-tweets--image">';
+          template += '</img>';
+        template += '</div>';
+        template += '<div class="ows-user-tweets--details">';
+          template += '<div class="ows-user-tweets--date">' + new Date(tweet.tweetDate).toLocaleString() + '</div>';
+          template += '<div class="ows-user-tweets--message">' + tweet.tweetMessage + '</div>';
+          template += '<ul class="ows-user-tweets--buttons">';
+            template += '<li class="ows-btn-actions"><button id='+ tweet.tweetId +' name="editTweet" class="btn">editar</button></li>';
+            template += '<li class="ows-btn-actions"><button id='+ tweet.tweetId +' name="publishTweet" class="btn">publicar</button></li>';
+            template += '<li class="ows-btn-actions"><button id='+ tweet.tweetId +' name="rejectTweet" class="btn">rechazar</button></li>';
+          template += '</ul>';
+        template += '</div>';
       template += '</div>';
+
+      // template += '</div>';
       main.insertAdjacentHTML('afterbegin', template);
     });
 
