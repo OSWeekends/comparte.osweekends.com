@@ -1,6 +1,6 @@
-if(navigator.serviceWorker){
-  navigator.serviceWorker.register('./sw.js');
-}
+// if(navigator.serviceWorker){
+//   navigator.serviceWorker.register('./sw.js');
+// }
 
 const app = (function(){
 
@@ -87,14 +87,18 @@ const app = (function(){
 
         } else {
           router.navigate('/');
-          document.querySelector('#header-welcome').style.display = 'none';
+          document.querySelector('header').style.display = 'none';
+          document.querySelector('footer').style.display = 'none';
           document.querySelector('main').innerHTML = '';
           const template =
           `
           <div class="main-container">
             <div class="main-container--div">
-              <button>login con twitter</button>
-              <label for="admin-checkbox" ><input type="checkbox" id="admin-checkbox" /> ¿Eres admin?</label>
+              <div class="main-container--div--logo">
+                <img src="./../src/img/icons/icon-72x72.png" />
+              </div>
+              <button class="main-container--div--btn-twitter">Login con Twitter</button>
+              <p id="admin-checkbox"><a href="/#!/admin">¿Eres admin?</a></p>
             </div>
           </div>
           `;

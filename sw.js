@@ -6,7 +6,7 @@ const APP_SHELL = [
   '/',
   'index.html',
   'src/css/style.css',
-  'src/img/osw-logo.svg',
+  'src/img/icons/icon-128x128.png',
   'src/js/main.js',
   'src/js/config.js'
 ];

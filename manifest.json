@@ -1,8 +1,8 @@
 {
   "name": "comparte OSWeekends",
   "short_name": "Comparte OSW",
-  "theme_color": "#085fff",
-  "background_color": "#085fff",
+  "theme_color": "#dee1ec",
+  "background_color": "#dee1ec",
   "display": "standalone",
   "orientation": "portrait",
   "Scope": "/",
