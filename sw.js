@@ -5,10 +5,10 @@ const CACHE_INMUTABLE = 'cache-inmuctable-v1';
 const APP_SHELL = [
   '/',
   'index.html',
-  './css/style.css',
-  '/img/osw-logo.svg',
-  'js/main.js',
-  'js/config.js'
+  'src/css/style.css',
+  'src/img/osw-logo.svg',
+  'src/js/main.js',
+  'src/js/config.js'
 ];
 
 const APP_SHELL_INMUTABLE = [
