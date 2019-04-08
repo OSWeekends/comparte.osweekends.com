@@ -1,10 +1,9 @@
+const router = require('./modules/variables');
+const init = require('./modules/init');
+const loginByEmail = require('./modules/loginByEmail');
+const getAllTweets = require('./modules/getAllTweets');
 
-const variables = require('./modules/variables');
-const init = require('./modules/login');
-const loginByEmail = require('./modules/login');
-const getAllTweets = require('./modules/tweets');
-
-variables.router
+router
   .on('/', init)
   .on('/admin', loginByEmail)
   .on('/admin-tweets', getAllTweets)
