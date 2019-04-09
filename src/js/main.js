@@ -1,6 +1,10 @@
-// if(navigator.serviceWorker){
-//   navigator.serviceWorker.register('./sw.js');
-// }
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(register => console.log('SW regitrado!'))
+      .catch(error => console.log(error));
+  });
+}
 
 const app = (function(){
 
@@ -128,7 +132,7 @@ const app = (function(){
         .addEventListener('click', logOut, false);
     } else {
       document.querySelector('header #header-welcome').style.display = 'flex';
-      const adorableImg = `https://api.adorable.io/avatars/48/${user.email}`
+      const adorableImg = `https://api.adorable.io/avatars/48/${user.email}`;
       document.querySelector('#header-user--username').textContent = 'ADMIN';
       document.querySelector('header #header-welcome .header-avatar img').setAttribute('src', adorableImg);
       // document.querySelector('.header-avatar').appendChild(img);

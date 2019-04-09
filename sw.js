@@ -1,12 +1,12 @@
 const CACHE_STATIC = 'cache-static-v1';
 const CACHE_DINAMIC = 'cache-dinamic-v1';
-const CACHE_INMUTABLE = 'cache-inmuctable-v1';
+const CACHE_INMUTABLE = 'cache-inmutable-v1';
 
 const APP_SHELL = [
   '/',
   'index.html',
   'src/css/style.css',
-  'src/img/icons/icon-128x128.png',
+  'src/img/icons/icon-72x72.png',
   'src/js/main.js',
   'src/js/config.js'
 ];
@@ -21,6 +21,7 @@ const APP_SHELL_INMUTABLE = [
 ];
 
 self.addEventListener('install', event => {
+  console.log('install event');
 
   const cacheStatic = caches.open(CACHE_STATIC)
     .then(cache => {
@@ -39,19 +40,24 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
+  console.log('activate');
   const res = caches.keys()
     .then(keys => {
       keys.forEach(key => {
+        console.log(key);
         if (key !== CACHE_STATIC && key.includes('cache-static')) {
+          console.log('Borrando cache antigua', key);
           return caches.delete(key);
         }
       });
     });
 
   event.waitUntil(res);
+  return self.clients.claim();
 });
 
 self.addEventListener('fetch', event => {
+  console.log('fetch event');
 
   const respuesta = caches.match(event.request)
     .then(res => {
@@ -65,8 +71,8 @@ self.addEventListener('fetch', event => {
               caches.open(CACHE_DINAMIC)
                 .then(cache => {
                   cache.put(event.request, resRequest.clone());
-                  return res.clone();
-                })
+                  console.log(cache);
+                });
             } else {
               return resRequest;
             }
