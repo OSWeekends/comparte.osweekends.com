@@ -41,12 +41,12 @@ function init() {
         const template =
         `
           <div class="main-container">
-            <div class="main-container--div">
+            <div class="main-container--tweet">
               <div class="main-textarea">
                 <div id="tweet" name="tweet" placeholder="tu tweet..." contentEditable="true"></div>
               </div>
 
-              <button id="send-tweet">Enviar tweet</button>
+              <button id="main-container--tweet-send-tweet">Enviar tweet</button>
             </div>
           </div>
         `;
@@ -55,7 +55,7 @@ function init() {
         document.querySelector('#tweet')
           .addEventListener('keyup', utils.limitChars, false);
 
-        document.querySelector('#send-tweet')
+        document.querySelector('#main-container--tweet-send-tweet')
           .addEventListener('click', utils.sendTweet, false);
 
 
