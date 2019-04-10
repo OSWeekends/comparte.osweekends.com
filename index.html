@@ -4,14 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#085FFF">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css"/>
   <link rel="stylesheet" href="src/css/style.css">
+  <link rel="manifest" href="manifest.json">
   <title>Comparte-OSWeekends</title>
 </head>
 <body>
   <header>
-    <img class="header-logo" src="src//img/osw-logo.svg" alt="logo">
+    <img class="header-logo" src="src/img/icons/icon-72x72.png" alt="logo">
     <div id="header-welcome">
       <div class="header-user">
         <p>Bienvenido <span id="header-user--username"></span></p>
@@ -37,8 +39,8 @@
   <script src="src/js/config.js"></script>
   <script>firebase.initializeApp(config)</script>
 
-  <!-- <script src="//unpkg.com/navigo@6"></script> -->
-  <script src="dist/js/main.min.js"></script>
+  <script src="//unpkg.com/navigo@6"></script>
+  <script src="src/js/main.js"></script>
 
 </body>
 </html>
