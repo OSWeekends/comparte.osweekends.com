@@ -1,4 +1,4 @@
-const router = require('./variables');
+const router = require('./navigo');
 
 const rootDB = firebase.database().ref();
 const users = rootDB.child('users');

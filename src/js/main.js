@@ -6,7 +6,9 @@
 //   });
 // }
 
-const router = require('./modules/variables');
+const config = require('./config');
+
+const router = require('./modules/navigo');
 const init = require('./modules/init');
 const loginByEmail = require('./modules/loginByEmail');
 const getAllTweets = require('./modules/getAllTweets');

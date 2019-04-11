@@ -1,5 +1,6 @@
 #files
 src/js/config.js
+dist/
 
 # Logs
 logs

@@ -6,8 +6,12 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "prebuild": "npm run clean",
+    "build": "npm run build:scripts && npm run build:css && npm run build:html",
     "build:scripts": "browserify src/js/main.js -t babelify -o dist/js/main.min.js -d",
-    "watch": "onchange src/**/*.js -- npm run dev",
+    "build:css": "cpy src/css/style.css dist/css",
+    "build:html": "cpy index.html dist/",
+
+    "watch": "onchange src/**/*.js -- npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -35,6 +39,7 @@
     "@babel/runtime": "7.4.3",
     "clean": "^4.0.2",
     "navigo": "^6.0.2",
-    "rimraf": "^2.6.3"
+    "rimraf": "^2.6.3",
+    "uglifyify": "^5.0.1"
   }
 }
