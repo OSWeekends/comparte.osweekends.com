@@ -37,7 +37,10 @@
   "dependencies": {
     "@babel/polyfill": "7.4.3",
     "@babel/runtime": "7.4.3",
+    "browserify": "^16.2.3",
     "clean": "^4.0.2",
+    "cpy-cli": "^2.0.0",
+    "imagemin-cli": "^4.0.1",
     "navigo": "^6.0.2",
     "rimraf": "^2.6.3",
     "uglifyify": "^5.0.1"
