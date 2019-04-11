@@ -78,7 +78,7 @@ function init() {
         <div class="main-container">
           <div class="main-container--div">
             <div class="main-container--div--logo">
-              <img src="./../src/img/icons/icon-72x72.png" />
+              <img src="img/icons/icon-72x72.png" />
             </div>
             <button class="main-container--div--btn-twitter">Login con Twitter</button>
             <p id="admin-checkbox"><a href="/#!/admin">¿Eres admin?</a></p>

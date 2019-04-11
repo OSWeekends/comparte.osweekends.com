@@ -9,7 +9,7 @@ function loginByEmail() {
   <div class="main-container">
     <div class="main-container--div">
       <div class="main-container--div--logo">
-        <img src="./../src/img/icons/icon-72x72.png" />
+        <img src="img/icons/icon-72x72.png" />
       </div>
 
       <div id="ows-login">
