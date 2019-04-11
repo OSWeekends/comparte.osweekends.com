@@ -4,7 +4,9 @@
   "description": "Gestión de twitter automagica ^^",
   "main": "index.js",
   "scripts": {
-    "dev": "browserify src/js/main.js -t babelify -o dist/js/main.min.js -d",
+    "clean": "rimraf dist/*",
+    "prebuild": "npm run clean",
+    "build:scripts": "browserify src/js/main.js -t babelify -o dist/js/main.min.js -d",
     "watch": "onchange src/**/*.js -- npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -31,6 +33,8 @@
   "dependencies": {
     "@babel/polyfill": "7.4.3",
     "@babel/runtime": "7.4.3",
-    "navigo": "^6.0.2"
+    "clean": "^4.0.2",
+    "navigo": "^6.0.2",
+    "rimraf": "^2.6.3"
   }
 }
