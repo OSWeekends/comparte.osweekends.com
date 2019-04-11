@@ -29,6 +29,7 @@ main .main-container {
   display: flex;
   align-items: center;
   height: inherit;
+  justify-content: center;
 }
 
 main .main-container--div {
