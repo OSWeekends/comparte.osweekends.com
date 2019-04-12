@@ -48,6 +48,15 @@
   </script>
   <script>firebase.initializeApp(config)</script>
   <script src="js/main.min.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(register => console.log('SW regitrado!'))
+          .catch(error => console.log(error));
+      });
+    }
+  </script>
 
   <!-- <script src="//unpkg.com/navigo@6"></script> -->
 

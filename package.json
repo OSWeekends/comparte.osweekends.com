@@ -6,10 +6,11 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "prebuild": "npm run clean",
-    "build": "npm run build:scripts && npm run build:css && npm run build:html && npm run image",
+    "build": "npm run build:scripts && npm run build:css && npm run build:html && npm run image && npm run serviceworker",
     "build:scripts": "browserify src/js/main.js -t babelify -o dist/js/main.min.js -d",
     "build:css": "cpy src/css/style.css dist/css",
     "build:html": "cpy index.html dist/",
+    "serviceworker": "cpy manifest.json dist/ & workbox injectManifest",
     "image": "imagemin src/img/icons/* --out-dir=dist/img/icons/",
     "watch": "onchange src/**/*.js -- npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
