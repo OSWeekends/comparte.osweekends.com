@@ -78,7 +78,7 @@ function toggleHeader(user) {
     document.querySelector('#header-user--username').textContent = user.displayName;
     document.querySelector('header #header-welcome .header-avatar img').setAttribute('src', user.photoURL);
     // document.querySelector('.header-avatar').appendChild(img);
-    document.querySelector('.header-user--logout button')
+    document.querySelector('.header-user--logout')
       .addEventListener('click', logOut, false);
   } else {
     document.querySelector('header #header-welcome').style.display = 'flex';
@@ -86,7 +86,7 @@ function toggleHeader(user) {
     document.querySelector('#header-user--username').textContent = 'ADMIN';
     document.querySelector('header #header-welcome .header-avatar img').setAttribute('src', adorableImg);
     // document.querySelector('.header-avatar').appendChild(img);
-    document.querySelector('.header-user--logout button')
+    document.querySelector('.header-user--logout')
       .addEventListener('click', logOut, false);
   }
 }

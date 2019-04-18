@@ -6,7 +6,7 @@ function loginByEmail() {
   let template = '';
   template =
   `
-  <div class="main-container">
+  <div class="main-container home">
     <div class="main-container--div">
       <div class="main-container--div--logo">
         <img src="img/icons/icon-72x72.png" />

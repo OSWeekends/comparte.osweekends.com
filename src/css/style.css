@@ -18,17 +18,20 @@ a, a:hover, a:visited {
 main {
   display: flex;
   flex-direction: column;
-  height: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  height: 100%;
+}
+
+main .main-container.home {
+  align-items: center;
+  height: inherit;
 }
 
 main .main-container {
   display: flex;
-  align-items: center;
-  height: inherit;
   justify-content: center;
 }
 
@@ -88,6 +91,10 @@ main .main-container #ows-login input{
   margin-bottom: 15px;
   padding: 10px;
   font-size: 14px;
+}
+
+main .container-tweets {
+  display: flex;
 }
 
 main p#admin-checkbox {
@@ -154,20 +161,41 @@ header {
   border-bottom: 1px solid #999;
   display: flex;
   justify-content: space-between;
+  height: 70px;
+}
+
+.header-container-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 header .header-logo {
-  /* height: 90px; */
+  width: 80%;
 }
 
 header #header-welcome {
   display: none;
-  flex: 0 1 350px;
+  flex: 0 1 210px;
   justify-content: space-around;
+  align-items: center;
+}
+
+header #header-welcome p {
+  margin: 0;
 }
 
 header .header-avatar {
   align-self: center;
+}
+
+.header-user {
+  display: flex;
+  flex-direction: column;
+}
+
+header a.header-user--logout {
+  align-self: flex-end;
 }
 
 header .header-avatar img{
