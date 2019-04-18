@@ -1,4 +1,6 @@
-function getAllTweets () {
+const tweets = require('./tweets');
+
+module.exports = function getAllTweets () {
   document.querySelector('main').innerHTML = '';
 
   const rootDB = firebase.database().ref();
@@ -51,7 +53,7 @@ function renderAllTweets (userToRender) {
   console.log(userToRender);
 
   userToRender.forEach( tweet => {
-    let template = '<div class="ows-user-tweets--tweet">';
+    let template = '<div class="ows-user-tweets--tweet" id=' + tweet.userId + '>';
       template += '<div class="ows-user-tweets--image">';
         template += '<img src="' + tweet.userImage + '" class="ows-user-tweets--image">';
         template += '</img>';
@@ -70,20 +72,17 @@ function renderAllTweets (userToRender) {
       template += '</div>';
     template += '</div>';
 
-    // template += '</div>';
     document.querySelector('main').insertAdjacentHTML('afterbegin', template);
   });
 
   document.querySelector('main').addEventListener('click', (event) => {
     if (event.target.tagName === 'BUTTON' && event.target.name === 'editTweet') {
-      editTweet(event);
+      tweets.editTweet(event);
     } else if (event.target.tagName === 'BUTTON' && event.target.name === 'publishTweet') {
-      publishTweet(event);
+      tweets.publishTweet(event);
     } else if (event.target.tagName === 'BUTTON' && event.target.name === 'rejectTweet') {
-      rejectTweet(event);
+      tweets.rejectTweet(event);
     }
 
   }, false);
 }
-
-module.exports = getAllTweets;
