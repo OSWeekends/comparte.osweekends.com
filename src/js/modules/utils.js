@@ -1,7 +1,17 @@
 const router = require('./navigo');
+const notifications = require('./notifications');
 
 const rootDB = firebase.database().ref();
 const users = rootDB.child('users');
+
+const user = {
+  uid: '',
+  username: '',
+  displayName: '',
+  creationTime: '',
+  photoURL: '',
+  isAdmin: false,
+};
 
 function goToAdmin(event) {
   if (event.target.checked) {
@@ -20,6 +30,7 @@ function login () {
     })
     .catch(error => {
       console.log(error);
+      notifications.showNotifications(error, null);
     });
 }
 
@@ -71,7 +82,7 @@ function toggleHeader(user) {
       .addEventListener('click', logOut, false);
   } else {
     document.querySelector('header #header-welcome').style.display = 'flex';
-    const adorableImg = `https://api.adorable.io/avatars/48/${user.email}`
+    const adorableImg = `https://api.adorable.io/avatars/48/${user.email}`;
     document.querySelector('#header-user--username').textContent = 'ADMIN';
     document.querySelector('header #header-welcome .header-avatar img').setAttribute('src', adorableImg);
     // document.querySelector('.header-avatar').appendChild(img);
@@ -141,9 +152,9 @@ function limitChars (event) {
       selection.removeAllRanges();
       selection.addRange(range);
 
-      document.querySelector('#send-tweet').disabled = true;
+      document.querySelector('#main-container--tweet-send-tweet').disabled = true;
     } else {
-      document.querySelector('#send-tweet').disabled = false;
+      document.querySelector('#main-container--tweet-send-tweet').disabled = false;
     }
   }
 }
@@ -163,8 +174,18 @@ function sendTweet () {
   });
 
   textArea.textContent = '';
-
+  notifications.showNotifications(null, notifications.MESSAGE.TWEET.OK);
   getMyTweets();
+}
+
+function saveUser(response) {
+  user.uid = response.user.uid;
+  user.username = response.additionalUserInfo.username;
+  user.displayName = response.user.displayName;
+  user.creationTime = response.user.metadata.a;
+  user.photoURL = response.user.photoURL;
+
+  users.child(user.uid).set(user);
 }
 
 module.exports = {
@@ -174,5 +195,6 @@ module.exports = {
   getMyTweets,
   toggleHeader,
   limitChars,
-  sendTweet
-}
+  sendTweet,
+  saveUser
+};

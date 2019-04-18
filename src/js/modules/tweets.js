@@ -1,3 +1,5 @@
+const notifications = require('./notifications');
+
 module.exports = function sendTweet () {
   const textArea = document.querySelector('#tweet');
 
@@ -46,7 +48,7 @@ module.exports = function getMyTweets () {
     });
 
   });
-}
+};
 
 module.exports = function editTweet(event) {
   console.log(event);
@@ -59,12 +61,14 @@ module.exports = function publishTweet(event) {
   const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/${event.target.id}`);
   ref.update({state: true});
   event.target.style.border = '1px solid green';
+  notifications.showNotifications(null, notifications.MESSAGE.STATE.PUBLISHED);
 };
 
 module.exports = function rejectTweet(event) {
   const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/${event.target.id}`);
   ref.update({state: false});
   event.target.style.border = '1px solid red';
+  notifications.showNotifications(notifications.MESSAGE.STATE.REJECTED, null);
 };
 
 module.exports = function getAllTweets () {
