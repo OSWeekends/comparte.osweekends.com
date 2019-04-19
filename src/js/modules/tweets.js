@@ -17,7 +17,7 @@ function sendTweet () {
   textArea.textContent = '';
 
   getMyTweets();
-};
+}
 
 function getMyTweets () {
 
@@ -48,28 +48,37 @@ function getMyTweets () {
     });
 
   });
-};
+}
 
 function editTweet(event) {
   console.log(event);
-  const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/`);
-  ref.child(event.target.id).remove();
-
-};
+  event.target.closest('.ows-user-tweets--tweet').style.opacity = 0.4;
+  disabledButtons(event.target);
+  // const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/`);
+  // ref.child(event.target.id).remove();
+}
 
 function publishTweet(event) {
   const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/${event.target.id}`);
   ref.update({state: true});
-  event.target.style.border = '1px solid green';
+  event.target.closest('.ows-user-tweets--tweet').style.opacity = 0.4;
   notifications.showNotifications(null, notifications.MESSAGE.STATE.PUBLISHED);
-};
+}
 
 function rejectTweet(event) {
   const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/${event.target.id}`);
   ref.update({state: false});
-  event.target.style.border = '1px solid red';
+  event.target.closest('.ows-user-tweets--tweet').style.opacity = 0.4;
   notifications.showNotifications(notifications.MESSAGE.STATE.REJECTED, null);
-};
+}
+
+function disabledButtons(target) {
+  // const elements = target.closest('.ows-user-tweets--buttons');
+  Array.from(target.closest('.ows-user-tweets--buttons').children)
+    .forEach(item => {
+      item.firstElementChild.disabled = true;
+    });
+}
 
 module.exports = {
   sendTweet,

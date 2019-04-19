@@ -53,7 +53,7 @@ function renderAllTweets (userToRender) {
   console.log(userToRender);
 
   userToRender.forEach( tweet => {
-    let template = '<div class="ows-user-tweets--tweet" id=' + tweet.userId + '>';
+    let template = '<div class="ows-user-tweets--tweet" data-id=' + tweet.userId + '>';
       template += '<div class="ows-user-tweets--image">';
         template += '<img src="' + tweet.userImage + '" class="ows-user-tweets--image">';
         template += '</img>';
@@ -64,10 +64,10 @@ function renderAllTweets (userToRender) {
           template += '<div class="ows-user-tweets--user">@' + tweet.userName + '</div>';
         template += '</div>';
         template += '<div class="ows-user-tweets--message">' + tweet.tweetMessage + '</div>';
-        template += '<ul class="ows-user-tweets--buttons">';
-          template += '<li class="ows-btn-actions"><button id='+ tweet.tweetId +' name="editTweet" class="btn">editar</button></li>';
-          template += '<li class="ows-btn-actions"><button id='+ tweet.tweetId +' name="publishTweet" class="btn">publicar</button></li>';
-          template += '<li class="ows-btn-actions"><button id='+ tweet.tweetId +' name="rejectTweet" class="btn">rechazar</button></li>';
+        template += '<ul class="ows-user-tweets--buttons" id='+ tweet.tweetId +'>';
+          template += '<li class="ows-btn-actions"><button name="editTweet" class="btn">editar</button></li>';
+          template += '<li class="ows-btn-actions"><button name="publishTweet" class="btn">publicar</button></li>';
+          template += '<li class="ows-btn-actions"><button name="rejectTweet" class="btn">rechazar</buttonet.tweetId></li>';
         template += '</ul>';
       template += '</div>';
     template += '</div>';

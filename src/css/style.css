@@ -145,7 +145,8 @@ main .main-container--tweet #main-container--tweet-send-tweet {
   border-radius: 4px;
 }
 
-main .main-container--tweet #main-container--tweet-send-tweet:disabled {
+main .main-container--tweet #main-container--tweet-send-tweet:disabled,
+ul.ows-user-tweets--buttons button.btn:disabled {
   color: #fff;
   background-color: #6c757d;
   border-color: #6c757d;
@@ -196,6 +197,7 @@ header .header-avatar {
 
 header a.header-user--logout {
   align-self: flex-end;
+  text-transform: uppercase;
 }
 
 header .header-avatar img{
@@ -220,7 +222,7 @@ footer {
 }
 
 .container-tweets ul li{
-  border-bottom: 1px solid #10316b;
+  border-bottom: 1px solid #eac100;
   padding-bottom: 15px;
 }
 
@@ -232,7 +234,8 @@ footer {
 .container-tweets-details-date,
 .ows-user-tweets--date {
   font-size: 14px;
-  color: #8e919a;
+  color: #0b8457;
+  opacity: .75;
 }
 
 .container-tweets-details-state {
@@ -242,8 +245,9 @@ footer {
 
 .container-tweets-details-state .container-tweets-details-state-,
 .ows-user-tweets--user{
-  color: #10316b;
-  font-weight: bold;
+  color: #0b8457;
+  font-weight: 400;
+  opacity: .75;
 }
 
 .ows-user-tweets--username {
@@ -253,7 +257,7 @@ footer {
 
 .ows-user-tweets--tweet {
   margin-top: 20px;
-  border-bottom: 1px solid #10316b;
+  border-bottom: 1px solid #eac100;
   display: flex;
   align-items: center;
 }
@@ -274,7 +278,7 @@ footer {
 
 .ows-btn-actions button {
   color: #fff;
-  background-color: #0b8457;
+  background-color: #10316b;
   border-color: rgba(0,0,0,0.2);
 
   position: relative;
