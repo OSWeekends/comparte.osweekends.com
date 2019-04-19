@@ -7,11 +7,11 @@ body {
   display: flex;
   flex-direction: column;
   font-family: 'Roboto', sans-serif;
-  background-color: #dee1ec;
+  background-color: #fffeec;
 }
 
 a, a:hover, a:visited {
-  color: #0b8457;
+  color: #e4508f;
   text-decoration: none;
 }
 
@@ -91,6 +91,7 @@ main .main-container #ows-login input{
   margin-bottom: 15px;
   padding: 10px;
   font-size: 14px;
+  border: 1px solid #e4508f;
 }
 
 main .container-tweets {
@@ -198,11 +199,13 @@ header .header-avatar {
 header a.header-user--logout {
   align-self: flex-end;
   text-transform: uppercase;
+  font-size: 14px;
 }
 
-header .header-avatar img{
+header .header-avatar img,
+.ows-user-tweets--tweet .ows-user-tweets--image img {
   border-radius: 50%;
-  border: 1px solid #ccc;
+  border: 1px solid #e4508f;
 }
 
 footer {
@@ -213,19 +216,19 @@ footer {
   color: white;
 }
 
-.container-tweets{
-}
-
 .container-tweets ul{
   padding-left: 0;
   list-style: none;
 }
 
 .container-tweets ul li{
-  border-bottom: 1px solid #eac100;
-  padding-bottom: 15px;
+  border-bottom: 1px solid #e4508f;
+  padding-bottom: 10px;
 }
 
+.container-tweets p {
+  margin: 30px 0 5px 0;
+}
 .container-tweets-details {
   display: flex;
   justify-content: space-between;
@@ -234,7 +237,7 @@ footer {
 .container-tweets-details-date,
 .ows-user-tweets--date {
   font-size: 14px;
-  color: #0b8457;
+  color: #556fb5;
   opacity: .75;
 }
 
@@ -245,9 +248,13 @@ footer {
 
 .container-tweets-details-state .container-tweets-details-state-,
 .ows-user-tweets--user{
-  color: #0b8457;
+  color: #556fb5;
   font-weight: 400;
   opacity: .75;
+}
+
+.ows-user-tweets--user{
+  font-size: 14px;
 }
 
 .ows-user-tweets--username {
@@ -257,8 +264,15 @@ footer {
 
 .ows-user-tweets--tweet {
   margin-top: 20px;
-  border-bottom: 1px solid #eac100;
+  border-bottom: 1px solid #e4508f;
   display: flex;
+  align-items: center;
+}
+
+.ows-user-notweets {
+  height: 100%;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
@@ -276,10 +290,13 @@ footer {
   justify-content: space-between;
 }
 
+button.btn {
+  text-transform: uppercase;
+}
+
 .ows-btn-actions button {
   color: #fff;
-  background-color: #10316b;
-  border-color: rgba(0,0,0,0.2);
+  background-color: #e4508f;
 
   position: relative;
   padding-left: 44px;
@@ -291,7 +308,6 @@ footer {
   width: 100%;
 
   padding: 6px 12px;
-  margin: 0 0 10px 0;
   font-size: 14px;
   font-weight: normal;
   line-height: 1.42857143;
@@ -306,10 +322,6 @@ footer {
 
 .ows-user-tweets--tweet .ows-user-tweets--image {
   margin-right: 10px;
-}
-
-.ows-user-tweets--tweet .ows-user-tweets--image img {
-  border-radius: 50%;
 }
 
 ul.ows-user-tweets--buttons {
