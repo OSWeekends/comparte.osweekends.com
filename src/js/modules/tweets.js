@@ -59,14 +59,14 @@ function editTweet(event) {
 }
 
 function publishTweet(event) {
-  const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/${event.target.id}`);
+  const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.dataset.id}/tweets/${event.target.parentElement.parentElement.id}`);
   ref.update({state: true});
   event.target.closest('.ows-user-tweets--tweet').style.opacity = 0.4;
   notifications.showNotifications(null, notifications.MESSAGE.STATE.PUBLISHED);
 }
 
 function rejectTweet(event) {
-  const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.id}/tweets/${event.target.id}`);
+  const ref = firebase.database().ref(`users/${event.currentTarget.firstElementChild.dataset.id}/tweets/${event.target.parentElement.parentElement.id}`);
   ref.update({state: false});
   event.target.closest('.ows-user-tweets--tweet').style.opacity = 0.4;
   notifications.showNotifications(notifications.MESSAGE.STATE.REJECTED, null);

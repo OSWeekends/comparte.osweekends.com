@@ -15,9 +15,12 @@ Gestión de twitter automagica ^^
 
 ## Pre-Instalación
 
-- Agregar la configuración del proyecto de Firebase al fichero `/src/js/config.js`
+- Agregar la configuración del proyecto de Firebase al index `/index.html`
 
 ```javascript
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-database.js"></script>
 const config = {
   apiKey: "XxXxXxXxXxXx",
   authDomain: "comparte-osweekends.firebaseapp.com",
@@ -26,6 +29,7 @@ const config = {
   storageBucket: "comparte-osweekends.appspot.com",
   messagingSenderId: "1234567890"
 };
+firebase.initializeApp(config)
 ```
 
 - Crear una aplicación en [developer.twitter.com](developer.twitter.com) y agregar los **keys and token** al fichero `/cloud-function/functions/config.js`
@@ -38,6 +42,13 @@ module.exports = {
   access_token_secret: '(Access token secret)'
 };
 ```
+
+- Dentro de Firebase, en `authentication/métodos de inicio de sesión`, habilitar **Twitter** y copiar las **api keys**
+```
+'(API key)',
+'(API secret key)',
+```
+
 - Instalar el plugin [live-server](https://github.com/ritwickdey/vscode-live-server) para VSCode
 
 ## Instalación

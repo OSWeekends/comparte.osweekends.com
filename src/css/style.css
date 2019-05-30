@@ -219,6 +219,7 @@ footer {
 .container-tweets ul{
   padding-left: 0;
   list-style: none;
+  width: 100%;
 }
 
 .container-tweets ul li{
